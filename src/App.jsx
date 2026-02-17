@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { User, Users, Code, Bug, Briefcase, PenTool, Server, Layout, ChevronDown, ChevronUp, Crown } from 'lucide-react';
+import { User, Users, Briefcase, Server, Layout } from 'lucide-react';
 import Card from './components/Card';
 import SquadCard from './components/SquadCard';
+import { ORGANIZATION_DATA } from './data/organization';
 
 export default function App() {
   return (
@@ -19,14 +20,14 @@ export default function App() {
         {/* --- Organizational Chart Section --- */}
         <div className="overflow-x-auto pb-8 mb-8">
           <div className="w-full flex flex-col items-center">
-            
+
             {/* Level 1: Manager */}
             <div className="relative z-10">
               <div className="w-64 bg-slate-800 text-white rounded-xl shadow-xl p-4 flex flex-col items-center text-center border-2 border-slate-700">
                 <div className="bg-slate-700 p-2 rounded-full mb-2">
                   <User size={24} />
                 </div>
-                <h2 className="font-bold text-lg">Software Dev Manager</h2>
+                <h2 className="font-bold text-lg">Software Development Manager</h2>
                 <p className="text-slate-300 text-sm">Head of Engineering</p>
               </div>
             </div>
@@ -37,44 +38,61 @@ export default function App() {
             {/* Horizontal Branching Line (Desktop Only) */}
             <div className="relative hidden md:flex justify-center w-full max-w-4xl">
               <div className="absolute top-0 w-[80%] h-0.5 bg-gray-300"></div>
-              
+
               {/* Branch Down to Shared Services (Left) */}
               <div className="absolute top-0 left-[10%] h-6 w-0.5 bg-gray-300"></div>
-              
-               {/* Branch Down to Shared Services (Right) */}
-               <div className="absolute top-0 right-[10%] h-6 w-0.5 bg-gray-300"></div>
+
+              {/* Branch Down to Shared Services (Right) */}
+              <div className="absolute top-0 right-[10%] h-6 w-0.5 bg-gray-300"></div>
             </div>
 
             {/* Level 2: Shared Services & Squads Container */}
             <div className="flex flex-col md:grid md:grid-cols-12 gap-8 md:gap-4 w-full max-w-5xl">
-              
+
               {/* Left Side: Shared Services Group 1 */}
-              <div className="md:col-span-2 flex flex-col items-center mt-0 md:mt-6 order-2 md:order-1">
-                 {/* Mobile Connector */}
-                 <div className="h-6 w-0.5 bg-gray-300 md:hidden -mt-8 mb-0"></div>
-                 <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-3 shadow-sm w-full max-w-xs text-center relative z-10">
-                    <PenTool size={20} className="mx-auto text-purple-600 mb-1" />
-                    <h3 className="font-bold text-purple-900 text-sm">UX/UI Team</h3>
-                    <p className="text-xs text-purple-700">Shared Service</p>
-                 </div>
+              {/* Left Side: Shared Services Group 1 (First half) */}
+              <div className="md:col-span-2 flex flex-col items-center mt-0 md:mt-6 order-2 md:order-1 gap-6">
+                {/* Mobile Connector */}
+                <div className="h-6 w-0.5 bg-gray-300 md:hidden -mt-8 mb-0"></div>
+
+                {ORGANIZATION_DATA.sharedServices.slice(0, 1).map((service) => {
+                  const Icon = service.icon;
+                  return (
+                    <div key={service.id} className={`${service.colorClass} border-2 rounded-xl p-3 shadow-sm w-full max-w-xs text-center relative z-10`}>
+                      <Icon size={20} className={`mx-auto ${service.iconColor} mb-1`} />
+                      <h3 className={`font-bold ${service.textColor} text-sm`}>{service.name}</h3>
+                      <p className={`text-xs ${service.textColor}`}>{service.description}</p>
+                    </div>
+                  );
+                })}
               </div>
 
               {/* Center: Squads */}
               <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 order-1 md:order-2">
-                <SquadCard name="Squad A" description="Product / Feature A" lead="Sarawut" />
-                <SquadCard name="Squad B" description="Product / Feature B" lead="N/A" />
-                <SquadCard name="Squad C" description="Product / Feature C" lead="N/A" />
+                {ORGANIZATION_DATA.squads.map((squad) => (
+                  <SquadCard
+                    key={squad.id}
+                    name={squad.name}
+                    description={squad.description}
+                    roles={squad.roles}
+                  />
+                ))}
               </div>
 
-               {/* Right Side: Shared Services Group 2 */}
-               <div className="md:col-span-2 flex flex-col items-center mt-0 md:mt-6 order-3">
-                 {/* Mobile Connector */}
-                 <div className="h-6 w-0.5 bg-gray-300 md:hidden -mt-4 mb-0"></div>
-                 <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3 shadow-sm w-full max-w-xs text-center relative z-10">
-                    <Layout size={20} className="mx-auto text-orange-600 mb-1" />
-                    <h3 className="font-bold text-orange-900 text-sm">Architect</h3>
-                    <p className="text-xs text-orange-700">Standards & Core</p>
-                 </div>
+              {/* Right Side: Shared Services Group 2 (Second half) */}
+              <div className="md:col-span-2 flex flex-col items-center mt-0 md:mt-6 order-3">
+                {/* Mobile Connector */}
+                <div className="h-6 w-0.5 bg-gray-300 md:hidden -mt-4 mb-0"></div>
+                {ORGANIZATION_DATA.sharedServices.slice(1, 2).map((service) => {
+                  const Icon = service.icon;
+                  return (
+                    <div key={service.id} className={`${service.colorClass} border-2 rounded-xl p-3 shadow-sm w-full max-w-xs text-center relative z-10`}>
+                      <Icon size={20} className={`mx-auto ${service.iconColor} mb-1`} />
+                      <h3 className={`font-bold ${service.textColor} text-sm`}>{service.name}</h3>
+                      <p className={`text-xs ${service.textColor}`}>{service.description}</p>
+                    </div>
+                  );
+                })}
               </div>
 
             </div>
@@ -91,21 +109,21 @@ export default function App() {
             </h3>
             <ul className="space-y-4">
               <li className="flex gap-3">
-                <div className="bg-blue-100 p-2 rounded-lg h-fit text-blue-600"><Users size={18}/></div>
+                <div className="bg-blue-100 p-2 rounded-lg h-fit text-blue-600"><Users size={18} /></div>
                 <div>
                   <h4 className="font-bold text-gray-800">Squad Model (Agile)</h4>
                   <p className="text-sm text-gray-600">แบ่งทีมย่อย 7-9 คน เพื่อความคล่องตัว ลดการสื่อสารที่ซับซ้อน (Communication Overhead)</p>
                 </div>
               </li>
               <li className="flex gap-3">
-                <div className="bg-green-100 p-2 rounded-lg h-fit text-green-600"><Briefcase size={18}/></div>
+                <div className="bg-green-100 p-2 rounded-lg h-fit text-green-600"><Briefcase size={18} /></div>
                 <div>
                   <h4 className="font-bold text-gray-800">Cross-functional</h4>
                   <p className="text-sm text-gray-600">รวม Dev, QA, BA ในทีมเดียว ให้งานจบได้โดยไม่ต้องรอคนนอกทีม (End-to-end delivery)</p>
                 </div>
               </li>
               <li className="flex gap-3">
-                <div className="bg-purple-100 p-2 rounded-lg h-fit text-purple-600"><Server size={18}/></div>
+                <div className="bg-purple-100 p-2 rounded-lg h-fit text-purple-600"><Server size={18} /></div>
                 <div>
                   <h4 className="font-bold text-gray-800">Center of Excellence</h4>
                   <p className="text-sm text-gray-600">ทีมกลาง (UX/UI, Architect) คอยซัพพอร์ตมาตรฐาน เพื่อให้งานทุกทีมไปในทิศทางเดียวกัน</p>
