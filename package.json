@@ -2,7 +2,7 @@
   "name": "orgchart",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://patompongchuechamluang.github.io/Orgchart",
+  "homepage": "https://hascii66.github.io/organization-chart/",
   "type": "module",
   "scripts": {
     "dev": "vite",
