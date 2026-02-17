@@ -18,7 +18,7 @@ export default function App() {
 
         {/* --- Organizational Chart Section --- */}
         <div className="overflow-x-auto pb-8 mb-8">
-          <div className="min-w-[800px] flex flex-col items-center">
+          <div className="w-full flex flex-col items-center">
             
             {/* Level 1: Manager */}
             <div className="relative z-10">
@@ -34,8 +34,8 @@ export default function App() {
             {/* Vertical Line from Manager */}
             <div className="h-10 w-0.5 bg-gray-300"></div>
 
-            {/* Horizontal Branching Line */}
-            <div className="relative flex justify-center w-full max-w-4xl">
+            {/* Horizontal Branching Line (Desktop Only) */}
+            <div className="relative hidden md:flex justify-center w-full max-w-4xl">
               <div className="absolute top-0 w-[80%] h-0.5 bg-gray-300"></div>
               
               {/* Branch Down to Shared Services (Left) */}
@@ -46,11 +46,13 @@ export default function App() {
             </div>
 
             {/* Level 2: Shared Services & Squads Container */}
-            <div className="grid grid-cols-12 gap-4 w-full max-w-5xl">
+            <div className="flex flex-col md:grid md:grid-cols-12 gap-8 md:gap-4 w-full max-w-5xl">
               
               {/* Left Side: Shared Services Group 1 */}
-              <div className="col-span-2 flex flex-col items-center mt-6">
-                 <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-3 shadow-sm w-full text-center">
+              <div className="md:col-span-2 flex flex-col items-center mt-0 md:mt-6 order-2 md:order-1">
+                 {/* Mobile Connector */}
+                 <div className="h-6 w-0.5 bg-gray-300 md:hidden -mt-8 mb-0"></div>
+                 <div className="bg-purple-50 border-2 border-purple-200 rounded-xl p-3 shadow-sm w-full max-w-xs text-center relative z-10">
                     <PenTool size={20} className="mx-auto text-purple-600 mb-1" />
                     <h3 className="font-bold text-purple-900 text-sm">UX/UI Team</h3>
                     <p className="text-xs text-purple-700">Shared Service</p>
@@ -58,15 +60,17 @@ export default function App() {
               </div>
 
               {/* Center: Squads */}
-              <div className="col-span-8 grid grid-cols-3 gap-4">
+              <div className="md:col-span-8 grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-4 order-1 md:order-2">
                 <SquadCard name="Squad A" description="Product / Feature A" lead="Sarawut" />
                 <SquadCard name="Squad B" description="Product / Feature B" lead="N/A" />
                 <SquadCard name="Squad C" description="Product / Feature C" lead="N/A" />
               </div>
 
                {/* Right Side: Shared Services Group 2 */}
-               <div className="col-span-2 flex flex-col items-center mt-6">
-                 <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3 shadow-sm w-full text-center">
+               <div className="md:col-span-2 flex flex-col items-center mt-0 md:mt-6 order-3">
+                 {/* Mobile Connector */}
+                 <div className="h-6 w-0.5 bg-gray-300 md:hidden -mt-4 mb-0"></div>
+                 <div className="bg-orange-50 border-2 border-orange-200 rounded-xl p-3 shadow-sm w-full max-w-xs text-center relative z-10">
                     <Layout size={20} className="mx-auto text-orange-600 mb-1" />
                     <h3 className="font-bold text-orange-900 text-sm">Architect</h3>
                     <p className="text-xs text-orange-700">Standards & Core</p>
